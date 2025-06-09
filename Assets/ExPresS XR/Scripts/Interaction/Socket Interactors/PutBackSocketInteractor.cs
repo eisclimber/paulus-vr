@@ -12,7 +12,7 @@ namespace ExPresSXR.Interaction
         /// The prefab that is displayed at the socket. Will automatically create an instance of the prefab and update the references.
         /// </summary>
         [SerializeField]
-        private GameObject _putBackPrefab;
+        protected GameObject _putBackPrefab;
         public GameObject putBackPrefab
         {
             get => _putBackPrefab;
@@ -142,7 +142,7 @@ namespace ExPresSXR.Interaction
         protected bool _omitSelectEnterEvent;
         protected bool _omitSelectExitEvent;
 
-        private Coroutine putBackCoroutine;
+        protected Coroutine _putBackCoroutine;
 
         /// <summary>
         /// Emitted once an interactable has been put back automatically, but not by placing it back into the socket manually.
@@ -256,9 +256,9 @@ namespace ExPresSXR.Interaction
                 return;
             }
 
-            if (putBackCoroutine != null)
+            if (_putBackCoroutine != null)
             {
-                StopCoroutine(putBackCoroutine);
+                StopCoroutine(_putBackCoroutine);
             }
 
             if (isActiveAndEnabled && _putBackTime <= 0)
@@ -268,15 +268,15 @@ namespace ExPresSXR.Interaction
             }
             else if (isActiveAndEnabled)
             {
-                putBackCoroutine = StartCoroutine(CreatePutBackCoroutine(_putBackTime));
+                _putBackCoroutine = StartCoroutine(CreatePutBackCoroutine(_putBackTime));
             }
         }
 
-        private void ResetPutBackTimer(SelectEnterEventArgs args)
+        protected virtual void ResetPutBackTimer(SelectEnterEventArgs args)
         {
-            if (putBackCoroutine != null)
+            if (_putBackCoroutine != null)
             {
-                StopCoroutine(putBackCoroutine);
+                StopCoroutine(_putBackCoroutine);
             }
         }
 
@@ -290,7 +290,7 @@ namespace ExPresSXR.Interaction
                 interactionManager.SelectEnter(this, (IXRSelectInteractable)_putBackInteractable);
                 OnPutBack.Invoke();
             }
-            putBackCoroutine = null;
+            _putBackCoroutine = null;
             SetHighlighterVisible(false);
         }
 
@@ -335,7 +335,7 @@ namespace ExPresSXR.Interaction
             }
         }
 
-        private void UnregisterPutBackInteractable()
+        protected void UnregisterPutBackInteractable()
         {
             if (_putBackInteractable != null)
             {
@@ -348,7 +348,7 @@ namespace ExPresSXR.Interaction
         }
 
 
-        private void RegisterPutBackInteractable()
+        protected void RegisterPutBackInteractable()
         {
             if (_putBackInstance != null && _putBackInstance.TryGetComponent(out _putBackInteractable))
             {
@@ -365,7 +365,7 @@ namespace ExPresSXR.Interaction
         }
 
 
-        private void InstantiatePutBackPrefab()
+        protected virtual void InstantiatePutBackPrefab()
         {
             if (_putBackPrefab != null)
             {
