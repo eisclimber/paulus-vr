@@ -3472,6 +3472,93 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 853985428}
   m_CullTransparentMesh: 1
+--- !u!1 &867582416
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 867582419}
+  - component: {fileID: 867582418}
+  - component: {fileID: 867582417}
+  m_Layer: 0
+  m_Name: Switch Scene Stuff
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &867582417
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 867582416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc4f037dd9da602428d6fa5ea7a3d499, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _exitType: 2
+  _menuSceneIdx: 2
+  _rig: {fileID: 460853755}
+  _findRigIfMissing: 0
+--- !u!114 &867582418
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 867582416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a911722e1bb685448d8e964c9561c6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _description: 
+  _waitTime: 3
+  _remainingTime: 0
+  autoStart: 1
+  oneShot: 1
+  OnStarted:
+    m_PersistentCalls:
+      m_Calls: []
+  OnTimeout:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 867582417}
+        m_TargetAssemblyTypeName: ExPresSXR.Misc.GameExiter, Assembly-CSharp
+        m_MethodName: QuitGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnPaused:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!4 &867582419
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 867582416}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -1.51, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1242272447}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &898120260
 GameObject:
   m_ObjectHideFlags: 0
@@ -4758,7 +4845,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 867582419}
   m_Father: {fileID: 1023032592}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -7778,6 +7866,9 @@ MonoBehaviour:
   grab: {fileID: 0}
   click: {fileID: 0}
   throw_: {fileID: 0}
+  OnFinished:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &2074551435
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7856,7 +7947,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.252, y: 1.01, z: -4.672}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8879528568425145389}
@@ -8013,6 +8104,9 @@ MonoBehaviour:
   grab: {fileID: 637971801}
   click: {fileID: 1365629192}
   throw_: {fileID: 1290946283}
+  OnFinished:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!95 &919132147509521931
 Animator:
   serializedVersion: 5

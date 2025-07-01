@@ -42,8 +42,7 @@ public class TotalScoreText : MonoBehaviour
     private void ShowDiffDisplay(int diff)
     {
         GameObject scoreNumbersGo = Instantiate(_diffDisplayPrefab); // Instantiate without parent to avoid canvas rotation problems
-        scoreNumbersGo.transform.position = transform.position + _pointsDisplayOffset;
-        scoreNumbersGo.transform.rotation = Quaternion.identity; // Use global rotation!
+        scoreNumbersGo.transform.SetPositionAndRotation(transform.position + _pointsDisplayOffset, Quaternion.identity);
         scoreNumbersGo.transform.localScale = Vector3.one * _pointsDisplayScale;
 
         if (scoreNumbersGo.TryGetComponent(out ScoreNumbers scoreNumbers))

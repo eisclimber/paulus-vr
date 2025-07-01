@@ -1,8 +1,9 @@
+using ExPresSXR.Misc;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
-using TMPro;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
-using ExPresSXR.Misc;
 
 
 namespace ExPresSXR.UI
@@ -11,7 +12,7 @@ namespace ExPresSXR.UI
     {
         [SerializeField]
         private string _inputText = "";
-        public string inputText
+        public string InputText
         {
             get => _inputText;
             set
@@ -20,14 +21,22 @@ namespace ExPresSXR.UI
 
                 if (_inputField != null)
                 {
-                    _inputField.text = _inputText;
+                    string prefix = _inputText.StartsWith(_textPrefix) ? "" : _textPrefix;
+                    string suffix = _inputText.EndsWith(_textSuffix) ? "" : _textSuffix;
+                    _inputField.text = prefix + _inputText + suffix;
                 }
             }
         }
 
         [SerializeField]
+        private string _textPrefix = "";
+
+        [SerializeField]
+        private string _textSuffix = "​";
+
+        [SerializeField]
         private CapsMode _capsMode = CapsMode.Toggle;
-        public CapsMode capsMode
+        public CapsMode CapsMode
         {
             get => _capsMode;
             set
@@ -35,25 +44,25 @@ namespace ExPresSXR.UI
                 _capsMode = value;
 
                 // Always start with tabs of if not always upper
-                capsActive = _capsMode == CapsMode.AlwaysUpper;
+                CapsActive = _capsMode == CapsMode.AlwaysUpper;
 
                 if (_capsButton != null)
                 {
                     // Update the model if forced always upper
-                    if (_capsButton.gameObject.GetComponent<ButtonToggler>())
+                    if (_capsButton.gameObject.TryGetComponent(out ButtonToggler toggler))
                     {
-                        _capsButton.gameObject.GetComponent<ButtonToggler>().pressed = (capsMode == CapsMode.AlwaysUpper);
+                        toggler.pressed = CapsMode == CapsMode.AlwaysUpper;
                     }
 
                     // Can't interact if one mode is forced
-                    _capsButton.interactable = (capsMode != CapsMode.AlwaysUpper && capsMode != CapsMode.AlwaysLower);
+                    _capsButton.interactable = CapsMode != CapsMode.AlwaysUpper && CapsMode != CapsMode.AlwaysLower;
                 }
             }
         }
 
         [SerializeField]
         private bool _capsActive = false;
-        public bool capsActive
+        public bool CapsActive
         {
             get => _capsActive;
             set
@@ -83,9 +92,9 @@ namespace ExPresSXR.UI
 
             if (_capsButton != null)
             {
-                if (_capsButton != null && _capsButton.gameObject.GetComponent<ButtonToggler>())
+                if (_capsButton != null && _capsButton.gameObject.TryGetComponent(out ButtonToggler toggler))
                 {
-                    _capsButton.gameObject.GetComponent<ButtonToggler>().OnToggleChanged.AddListener(ChangeCapsActive);
+                    toggler.OnToggleChanged.AddListener(ChangeCapsActive);
                 }
             }
         }
@@ -93,63 +102,72 @@ namespace ExPresSXR.UI
 
         public void ConfirmText()
         {
-            OnTextEntered.Invoke(inputText);
+            OnTextEntered.Invoke(InputText);
         }
 
         public void AppendToText(string stringToAppend)
         {
-            // This will set the text to the inputField (via the setter)
-            inputText += capsActive ? stringToAppend.ToUpper() : stringToAppend.ToLower();
-
-            if (capsActive && _capsMode == CapsMode.OneCharUpper)
+            // This will update the text displayed via the setter function
+            string rawValue = CapsActive ? stringToAppend.ToUpper() : stringToAppend.ToLower();
+            if (_textSuffix != "" && _inputText.EndsWith(_textSuffix)) // Remove suffix if present
             {
-                capsActive = !capsActive;
+                _inputText = _inputText[..^_textSuffix.Length];
+            }
+            InputText += rawValue + _textSuffix;
 
-                if (_capsButton != null && _capsButton.gameObject.GetComponent<ButtonToggler>())
+            if (CapsActive && _capsMode == CapsMode.OneCharUpper)
+            {
+                CapsActive = !CapsActive;
+
+                if (_capsButton != null && _capsButton.gameObject.TryGetComponent(out ButtonToggler toggler))
                 {
-                    _capsButton.gameObject.GetComponent<ButtonToggler>().pressed = capsActive;
+                    toggler.pressed = CapsActive;
                 }
             }
 
-            OnTextChanged.Invoke(inputText);
+            OnTextChanged.Invoke(_inputText);
         }
 
         public void RemoveLastFromText()
         {
-            if (inputText.Length > 0)
+            if (_inputText.Length > 0)
             {
-                inputText = inputText.Substring(0, inputText.Length - 1);
-                OnTextChanged.Invoke(inputText);
+                int numToStrip = _inputText.EndsWith(_textSuffix) ? _textSuffix.Length + 1 : 1;
+                string newText = _inputText[..^numToStrip];
+                newText = newText != _textPrefix ? newText + _textSuffix : "";
+                InputText = newText;
+
+                OnTextChanged.Invoke(_inputText);
             }
         }
 
         public void ClearText()
         {
-            inputText = "";
-            OnTextChanged.Invoke(inputText);
+            InputText = "";
+            OnTextChanged.Invoke(_inputText);
         }
 
 
         public void ChangeCapsActive(bool newCaps)
         {
-            capsActive = newCaps;
+            CapsActive = newCaps;
         }
 
 
         // Allow text input via keyboard
         private void OnInputFieldValueChanged(string newValue)
         {
-            if (inputText != newValue)
+            if (_inputText != newValue)
             {
-                inputText = newValue;
+                _inputText = newValue;
             }
         }
 
         // Allows in-editor changes
         private void OnValidate()
         {
-            inputText = _inputText;
-            capsMode = _capsMode;
+            InputText = _inputText;
+            CapsMode = _capsMode;
         }
     }
 

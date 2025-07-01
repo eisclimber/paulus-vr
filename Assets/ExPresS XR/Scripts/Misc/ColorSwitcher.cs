@@ -32,22 +32,23 @@ namespace ExPresSXR.Misc
         [Tooltip("When changing to the Alternative Material, the object's material must be the Original Material.")]
         public bool requireAlternativeMaterialMatch;
 
+        public virtual Material AffectedMaterial { get; set; }
 
-
-        private Material _originalMaterial;
-        private MeshRenderer _meshRenderer;
+        protected Material _originalMaterial;
+        protected MeshRenderer _meshRenderer;
 
 
         private void Awake()
         {
             _meshRenderer = GetComponent<MeshRenderer>();
-            _originalMaterial = _meshRenderer.material;
+            _originalMaterial = AffectedMaterial;
 
             if (alternativeMaterial == null)
             {
                 Debug.LogWarning("No Material assigned to Color Switcher. Materials won't switch.");
             }
         }
+        
 
         // Instant Switches
         public void ActivateAlternativeMaterial()
@@ -134,18 +135,18 @@ namespace ExPresSXR.Misc
         private void SetAlternativeMaterialActive()
         {
             if (_meshRenderer != null && alternativeMaterial != null
-                && (!requireAlternativeMaterialMatch || _meshRenderer.material == _originalMaterial))
+                && (!requireAlternativeMaterialMatch || AffectedMaterial == _originalMaterial))
             {
-                _meshRenderer.material = alternativeMaterial;
+                AffectedMaterial = alternativeMaterial;
             }
         }
 
         private void SetOriginalMaterialActive()
         {
             if (_meshRenderer != null
-                && (!requireOriginalMaterialMatch || _meshRenderer.material == alternativeMaterial))
+                && (!requireOriginalMaterialMatch || AffectedMaterial == alternativeMaterial))
             {
-                _meshRenderer.material = _originalMaterial;
+                AffectedMaterial = _originalMaterial;
             }
         }
 
@@ -153,7 +154,7 @@ namespace ExPresSXR.Misc
         {
             if (_meshRenderer != null)
             {
-                if (_meshRenderer.material == alternativeMaterial)
+                if (AffectedMaterial == alternativeMaterial)
                 {
                     SetAlternativeMaterialActive();
                 }

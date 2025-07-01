@@ -109,6 +109,7 @@ namespace ExPresSXR.Minigames.TargetArea
 
         private void OnTriggerEnter(Collider other)
         {
+            Debug.Log("Other " + other);
             if (other.gameObject.TryGetComponent(out TargetArea target)
                 && IsUncompletedTarget(target))
             {

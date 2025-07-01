@@ -86,12 +86,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ce7317bf97bb1544a38b8bfd93a4167, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _displayedTile:
+    CenterCloth: 1
+    TopCloth: 1
+    BottomCloth: 2
+    LeftCloth: 0
+    RightCloth: 0
   _renderer: {fileID: 4165553602767445178}
   _pointsDisplayPrefab: {fileID: 3528977270142281369, guid: d3f500e7ff17c3342b554bb44ec4bddc, type: 3}
   _subScoreShowDelay: 0.3
   _pointsDisplayScale: 0.2
   _pointsDisplayRadius: 0.09
-  _pointsDisplayUpOffset: 0.09
+  _displayOffsetReference: {fileID: 0}
+  _pointsDisplayOffset: {x: 0, y: 0, z: -0.09}
   _lightBurlapMaterial: {fileID: 2100000, guid: 2213b9649a1f6a7439eedfd7a973fd5b, type: 2}
   _darkBurlapMaterial: {fileID: 2100000, guid: 2a5f757c2acb047409e80126aadbc3e1, type: 2}
   _leatherMaterial: {fileID: 2100000, guid: cfc0f9cde443479458d29bb668e45f92, type: 2}
@@ -104,7 +111,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2508496878033894767}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 591d23d5fef91fe42896c80eda572a14, type: 3}
+  m_Script: {fileID: 11500000, guid: e2a5f2c9d64acdc43a8dc079b3793937, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_InteractionManager: {fileID: 0}
@@ -269,6 +276,21 @@ MonoBehaviour:
   OnScaleReset:
     m_PersistentCalls:
       m_Calls: []
+  OnRotationSnapped:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 904292273296357282}
+        m_TargetAssemblyTypeName: ClothTileDisplay, Assembly-CSharp
+        m_MethodName: RotateTileData
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!54 &2468651098656869546
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -6,14 +6,32 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/ExPresS XR/Scenes/Basic Main Menu Scene.unity
-    guid: ec3137439276ef24298353104c5a7178
+    path: Assets/Scenes/Main Menu.unity
+    guid: e76959615f12ee140b2fdacb2d29b45f
   - enabled: 1
-    path: Assets/ExPresS XR/Scenes/General Export Scene.unity
-    guid: aba3dcdbbc0e65e429bb32cab7a733b9
+    path: Assets/Scenes/Tutorial.unity
+    guid: befe4fdb6f16507439df4ccf9cb680bd
   - enabled: 1
-    path: Assets/ExPresS XR/Scenes/Minigames/Archery Exhibit Kyudojo Scene.unity
-    guid: e2a8d153071af5d47ac68aafe2334e88
+    path: Assets/Scenes/0 - Exhibition Room.unity
+    guid: 91debd206e4d68444ba0fa792c021d80
+  - enabled: 1
+    path: Assets/Scenes/1 - Boxing Game.unity
+    guid: b43aa9bc6e937f1468e208f1eb01136e
+  - enabled: 1
+    path: Assets/Scenes/1 - Exhibition Room.unity
+    guid: 2eb1dd74cee13f344bbf304ff2a46962
+  - enabled: 1
+    path: Assets/Scenes/2 - Cloth Game.unity
+    guid: aa78b2c7d626f144996dfa6229919be9
+  - enabled: 1
+    path: Assets/Scenes/2 - Exhibition Room.unity
+    guid: 8aa5a145a44c51c4cb48c9d934d80eff
+  - enabled: 1
+    path: Assets/Scenes/3 - Exhibition Room.unity
+    guid: 9eaac948bc353224cac045a7b1855d21
+  - enabled: 1
+    path: Assets/Scenes/4 - Exhibition Room.unity
+    guid: 7b7e2faca5aeb704eb4e6b61685ca3f4
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 4340d25f9eee7054b9b5069a374b2eba, type: 2}
     WebXR.Settings: {fileID: 11400000, guid: 3137875602c21bb41ab6a7aee5c329ee, type: 2}

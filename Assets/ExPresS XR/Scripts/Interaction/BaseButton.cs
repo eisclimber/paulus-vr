@@ -104,6 +104,12 @@ namespace ExPresSXR.Interaction
         }
 
         /// <summary>
+        /// Duration for which a repress is prevented. Set to zero to ignore.
+        /// </summary>
+        [SerializeField]
+        private float _repressTimeout = 0.3f;
+
+        /// <summary>
         /// If enabled requires interactions through an XRDirectInteractor.
         /// If disabled other Interactors like RayInteractors can push the button too.
         /// </summary>
@@ -121,6 +127,7 @@ namespace ExPresSXR.Interaction
             get => _pressed;
             private set => _pressed = value;
         }
+        
 
         /// <summary>
         /// AudioPlayer used to play sounds that is used to play the provided AudioClips when the button is pressed or released.
@@ -130,6 +137,9 @@ namespace ExPresSXR.Interaction
 
 
         private float _previousHandHeight = 0.0f;
+
+        private float _lastTimePressed;
+        private float _lastTimeReleased;
         private XRBaseInteractor _hoverInteractor = null;
 
         // Is true when the button is in toggle mode is being toggled up
@@ -349,15 +359,19 @@ namespace ExPresSXR.Interaction
         private void CheckRegularPress()
         {
             bool isDown = IsInDownPosition();
+            float timeSinceLastPress = Time.time - _lastTimePressed;
+            float timeSinceLastRelease = Time.time - _lastTimePressed;
 
-            if (isDown && !pressed)
+            if (isDown && !pressed && timeSinceLastPress >= _repressTimeout)
             {
                 _pressed = true;
+                _lastTimePressed = Time.time;
                 OnPressed.Invoke();
             }
-            else if (!isDown && pressed)
+            else if (!isDown && pressed && timeSinceLastRelease >= _repressTimeout)
             {
                 _pressed = false;
+                _lastTimeReleased = Time.time;
                 OnReleased.Invoke();
             }
         }
@@ -374,12 +388,14 @@ namespace ExPresSXR.Interaction
             {
                 _pressed = true;
                 SetYPosition(_yMin);
+                _lastTimePressed = Time.time;
                 OnTogglePressed.Invoke();
                 PlayToggledDownSound();
             }
             else if (pressed)
             {
                 _pressed = false;
+                _lastTimeReleased = Time.time;
                 OnToggleReleased.Invoke();
                 PlayToggledUpSound();
             }

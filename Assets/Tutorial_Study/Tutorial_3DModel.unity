@@ -3874,7 +3874,7 @@ MeshRenderer:
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
   m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
+  m_SelectedEditorRenderState: 2
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
@@ -7688,6 +7688,9 @@ MonoBehaviour:
   grab: {fileID: 0}
   click: {fileID: 0}
   throw_: {fileID: 0}
+  OnFinished:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &2074551435
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7923,6 +7926,9 @@ MonoBehaviour:
   grab: {fileID: 637971801}
   click: {fileID: 1365629192}
   throw_: {fileID: 1290946283}
+  OnFinished:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!95 &919132147509521931
 Animator:
   serializedVersion: 5

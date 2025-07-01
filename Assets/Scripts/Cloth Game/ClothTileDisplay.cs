@@ -1,4 +1,5 @@
 using System.Collections;
+using UnityEditor.Localization.Plugins.XLIFF.V12;
 using UnityEngine;
 
 public class ClothTileDisplay : MonoBehaviour
@@ -32,8 +33,19 @@ public class ClothTileDisplay : MonoBehaviour
     [SerializeField]
     private float _pointsDisplayRadius = 0.09f;
 
+    [Space]
+
     [SerializeField]
-    private float _pointsDisplayUpOffset = 0.09f;
+    private Transform _displayOffsetReference;
+    public Transform DisplayOffsetReference
+    {
+        get => _displayOffsetReference;
+        set => _displayOffsetReference = value;
+    }
+
+
+    [SerializeField]
+    private Vector3 _pointsDisplayOffset = new(0.0f, 0.0f, -0.09f);
 
     [Space]
 
@@ -80,7 +92,7 @@ public class ClothTileDisplay : MonoBehaviour
 
     private IEnumerator ShowScoresSequential(ClothGame.ScoreResults score)
     {
-        score.PrintScore();
+        // score.PrintScore();
         if (score.CenterScore > 0)
         {
             SpawnPointsDisplay(score.CenterScore, score.CenterColor, Vector3.zero);
@@ -114,9 +126,10 @@ public class ClothTileDisplay : MonoBehaviour
 
     private void SpawnPointsDisplay(int points, Color textColor, Vector3 direction)
     {
-        GameObject scoreNumbersGo = Instantiate(_pointsDisplayPrefab, transform);
-        scoreNumbersGo.transform.localPosition = direction * _pointsDisplayRadius + Vector3.up * _pointsDisplayUpOffset;
-        scoreNumbersGo.transform.rotation = Quaternion.identity; // Use global rotation!
+        GameObject scoreNumbersGo = Instantiate(_pointsDisplayPrefab);
+        // Use offset of the reference or global offset
+        Vector3 displayOffset = _displayOffsetReference != null ? _displayOffsetReference.rotation * _pointsDisplayOffset : _pointsDisplayOffset;
+        scoreNumbersGo.transform.SetPositionAndRotation(transform.position +  direction * _pointsDisplayRadius + displayOffset, Quaternion.identity);
         scoreNumbersGo.transform.localScale = Vector3.one * _pointsDisplayScale;
 
         if (scoreNumbersGo.TryGetComponent(out ScoreNumbers scoreNumbers))
@@ -124,6 +137,14 @@ public class ClothTileDisplay : MonoBehaviour
             scoreNumbers.ShowScore(points, textColor);
         }
     }
+
+    public void RotateTileDataDegrees(float degrees) => _displayedTile.RotateDegrees(degrees);
+    
+    [ContextMenu("Rotate Tile Data")]
+    public void RotateTileData() => _displayedTile?.Rotate(1);
+
+    public void RotateTileData(int steps) => _displayedTile?.Rotate(steps);
+
 
     [ContextMenu("Display Test Score")]
     public void DisplayTestScore() => DisplayScore(new(1, 2, 10, 0, 4));

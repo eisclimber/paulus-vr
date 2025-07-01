@@ -1,4 +1,5 @@
 using System;
+using ExPresSXR.Misc;
 using UnityEngine;
 
 [Serializable]
@@ -9,13 +10,13 @@ public class ClothTile
 
     [SerializeField]
     public ClothType TopCloth;
-    
+
     [SerializeField]
     public ClothType BottomCloth;
-    
+
     [SerializeField]
     public ClothType LeftCloth;
-    
+
     [SerializeField]
     public ClothType RightCloth;
 
@@ -75,11 +76,36 @@ public class ClothTile
         }
         else if (aDir != -bDir)
         {
-            return aType == bType; // Assuming they are opposite assuming the four possible directions
+            return aType == bType; // Assuming they are connected via a corner (i.e. not on opposite sides)
         }
 
         return aType == CenterCloth && aType == bType; // If opposing must be connected via center too
     }
+
+
+    /// <summary>
+    /// Rotates clockwise in steps of 90 degrees.
+    /// </summary>
+    /// <param name="degrees"></param>
+    public void RotateDegrees(float degrees) => Rotate(RuntimeUtils.PosMod(Mathf.RoundToInt(degrees / 90.0f), 90));
+
+    public void Rotate(int steps)
+    {
+        if (steps < 0 || steps > 3)
+        {
+            Debug.Log($"Negative or more than one revelation provided: {steps}. This should be avoided.");
+        }
+
+        for (int i = 0; i < steps; i++)
+        {
+            ClothType oldTop = TopCloth;
+            TopCloth = RightCloth;
+            RightCloth = BottomCloth;
+            BottomCloth = LeftCloth;
+            LeftCloth = oldTop;
+        }
+    }
+
 
     public ClothType DirectionToClothType(Vector2Int dir)
     {

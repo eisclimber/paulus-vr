@@ -1,6 +1,4 @@
-using UnityEditor.Timeline;
 using UnityEngine;
-using UnityEngine.SocialPlatforms.Impl;
 
 public class ClothGameDebug : MonoBehaviour
 {

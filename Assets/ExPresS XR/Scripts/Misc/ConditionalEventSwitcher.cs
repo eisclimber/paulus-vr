@@ -21,9 +21,10 @@ namespace ExPresSXR.Misc
             get => _condition;
             set
             {
+                bool changed = _condition != value;
                 _condition = value;
 
-                if (_autoEmitWhenChanged)
+                if (_autoEmitWhenSet && (!_onlyEmitWhenChanged || _onlyEmitWhenChanged && changed))
                 {
                     InvokeConditionalEvent();
                 }
@@ -34,13 +35,24 @@ namespace ExPresSXR.Misc
         }
 
         [SerializeField]
-        private bool _autoEmitWhenChanged = true;
-        public bool AutoEmitWhenChanged
+        private bool _autoEmitWhenSet = true;
+        public bool AutoEmitWhenSet
         {
-            get => _autoEmitWhenChanged;
+            get => _autoEmitWhenSet;
             set
             {
-                _autoEmitWhenChanged = value;
+                _autoEmitWhenSet = value;
+            }
+        }
+
+        [SerializeField]
+        private bool _onlyEmitWhenChanged = true;
+        public bool OnlyEmitWhenChanged
+        {
+            get => _onlyEmitWhenChanged;
+            set
+            {
+                _onlyEmitWhenChanged = value;
             }
         }
 

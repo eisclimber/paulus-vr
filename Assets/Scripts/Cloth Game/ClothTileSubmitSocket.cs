@@ -1,4 +1,3 @@
-using ExPresSXR.Experimentation.DataGathering;
 using ExPresSXR.Interaction;
 using UnityEngine;
 using UnityEngine.Events;
@@ -23,7 +22,7 @@ public class ClothTileSubmitSocket : HighlightableSocketInteractor
     private bool _disableOnSelect = true;
 
 
-    private IXRSelectInteractable _interactable;
+    private XRBaseInteractable _interactable;
 
 
     /// <summary>
@@ -54,7 +53,7 @@ public class ClothTileSubmitSocket : HighlightableSocketInteractor
 
         if (_interactable != null)
         {
-            _interactable.transform.gameObject.SetActive(false);
+            _interactable.gameObject.SetActive(false);
         }
     }
 
@@ -64,7 +63,7 @@ public class ClothTileSubmitSocket : HighlightableSocketInteractor
     /// <param name="args">Select args of the select enter event.</param>
     protected void HandleSubmission(SelectEnterEventArgs args)
     {
-        _interactable = args.interactableObject;
+        _interactable = args.interactableObject as XRBaseInteractable;
         if (args.interactableObject is ExPresSXRGrabInteractable interactable)
         {
             interactable.AllowGrab = false;

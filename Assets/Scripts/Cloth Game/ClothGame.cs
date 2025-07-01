@@ -1,6 +1,9 @@
 using System;
+using ExPresSXR.Misc;
+using Unity.XR.Oculus;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UIElements;
 
 public class ClothGame : MonoBehaviour
 {
@@ -245,7 +248,7 @@ public class ClothGame : MonoBehaviour
 
         public void PrintScore()
         {
-            Debug.Log($"Final Score: {TotalScore} ({CenterScore} x {TopScore} x {BottomScore} x {LeftScore} x {RightScore}");
+            Debug.Log($"Final Score: {TotalScore} ({CenterScore} x {TopScore} x {BottomScore} x {LeftScore} x {RightScore})");
         }
     }
 }

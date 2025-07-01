@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.Events;
 
 
 public class New_Animation : MonoBehaviour
@@ -31,6 +32,8 @@ public class New_Animation : MonoBehaviour
 
     //button counter
     int buttoncounter = 0;
+
+    public UnityEvent OnFinished;
 
 
     // Start is called before the first frame update
@@ -63,6 +66,7 @@ public class New_Animation : MonoBehaviour
             grab.SetActive(false);
             throw_.SetActive(false);
             gameObject.SetActive(false);
+            OnFinished.Invoke();
         }
         else if (state == 1 || state == 2)
         {
@@ -79,7 +83,7 @@ public class New_Animation : MonoBehaviour
             transform.position = position[state];
             grab.SetActive(true);
         }
-        else if( state == 4)
+        else if (state == 4)
         {
             click.SetActive(false);
             grab.SetActive(false);
@@ -88,7 +92,7 @@ public class New_Animation : MonoBehaviour
             transform.position = position[state];
             throw_.SetActive(true);
         }
-        else 
+        else
         {
             click.SetActive(false);
             grab.SetActive(false);
